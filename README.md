@@ -1,16 +1,16 @@
 # 10x
 
-A set of Claude Code skills that upgrade your UI. Three commands that analyze spacing, depth, and motion in any web codebase and propose systematic improvements.
+A set of Claude Code and Codex skills that upgrade your UI. Three skills analyze spacing, depth, and motion in any web codebase and propose systematic improvements.
 
-## Commands
+## Skills
 
-| Command | What it does |
+| Skill | What it does |
 |---------|-------------|
-| `/spacing` | Finds spacing inconsistencies. Enforces a 4pt/8pt scale and the "tight groups, loose between" rule. |
-| `/depth` | Adds visual depth through multi-stop shadows, surface layering, and elevation tokens. Handles light/dark themes. |
-| `/motion` | Adds purposeful transitions with tokenized durations. Flags dangerous animations. Always adds reduced-motion support. |
+| `spacing` | Finds spacing inconsistencies. Enforces a 4pt/8pt scale and the "tight groups, loose between" rule. |
+| `depth` | Adds visual depth through multi-stop shadows, surface layering, and elevation tokens. Handles light/dark themes. |
+| `motion` | Adds purposeful transitions with tokenized durations. Flags dangerous animations. Always adds reduced-motion support. |
 
-Each command runs in three modes:
+Each skill runs in three modes:
 - **analyse** — report issues only
 - **plan** — report issues + show proposed fixes (default)
 - **apply** — report + fix
@@ -23,11 +23,18 @@ cd 10x
 ./install.sh
 ```
 
-This symlinks the skills into `~/.claude/skills/` so they work in any project.
+This symlinks the skills into:
+- `~/.claude/skills/` (Claude Code)
+- Codex skills directory:
+  - `$CODEX_HOME/skills` if `CODEX_HOME` is set
+  - otherwise `~/.agents/skills` if it already exists
+  - otherwise `~/.codex/skills`
 
 ## Usage
 
-Open any project in Claude Code and run:
+### Claude Code
+
+Open any project and run:
 
 ```
 /spacing
@@ -41,6 +48,16 @@ Open any project in Claude Code and run:
 /motion
 /motion --style expressive
 /motion --mode apply
+```
+
+### Codex
+
+Open any project and invoke skills by name in your prompt:
+
+```text
+Use $spacing in apply mode for src/components.
+Use $depth with shadow-style soft-ui.
+Use $motion in plan mode.
 ```
 
 ## Configuration
@@ -87,7 +104,7 @@ cd 10x
 
 ## How It Works
 
-These are Claude Code skills — markdown files that give Claude structured design knowledge and step-by-step analysis procedures. Claude reads your code, applies the design heuristics, and proposes (or applies) specific edits.
+These are agent skills - markdown files that provide structured design knowledge and step-by-step analysis procedures. Claude Code and Codex read your code, apply the design heuristics, and propose (or apply) specific edits.
 
 The design principles come from three areas:
 - **Spacing**: Group elements tightly, then step up between groups by consistent increments
