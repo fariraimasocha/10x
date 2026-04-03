@@ -1,0 +1,31 @@
+{
+  "spacing": {
+    "baseUnit": "rem",
+    "gridStep": 4,
+    "groupStepRem": 1.0,
+    "normaliseToTokens": true
+  },
+  "depth": {
+    "shadowStyle": "material-like",
+    "elevationLevels": 5,
+    "themeModes": ["light", "dark"],
+    "normaliseToTokens": true
+  },
+  "motion": {
+    "style": "standard",
+    "respectReducedMotion": true,
+    "preferTransforms": true
+  },
+  "tokens": {
+    "outputPath": "./tokens",
+    "format": "css-variables"
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".next",
+    "build",
+    "vendor",
+    "*.min.css"
+  ]
+}
