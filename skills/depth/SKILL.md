@@ -1,6 +1,6 @@
 ---
 name: depth
-description: "Add visual depth through color layering, elevation shadows, and surface hierarchy. Enforces multi-stop shadows, role-based elevation, and light/dark theme consistency."
+description: "Add visual depth through color layering, elevation shadows, and surface hierarchy. Analyzes and proposes multi-stop shadows, role-based elevation, and light/dark theme consistency."
 user-invokable: true
 args:
   - name: scope

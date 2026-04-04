@@ -33,11 +33,21 @@ Overlay returns to white because it relies on shadow (elevation) for separation 
 Base: dark gray (`#121212` to `#1a1a1a`). In dark mode, higher elevation = lighter tint (surfaces "rise toward the light").
 
 ```css
-[data-theme="dark"], .dark, @media (prefers-color-scheme: dark) {
+[data-theme="dark"],
+.dark {
   --10x-surface-canvas: #121212;
   --10x-surface-default: #1e1e1e;
   --10x-surface-raised: #2a2a2a;
   --10x-surface-overlay: #333333;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(.light) {
+    --10x-surface-canvas: #121212;
+    --10x-surface-default: #1e1e1e;
+    --10x-surface-raised: #2a2a2a;
+    --10x-surface-overlay: #333333;
+  }
 }
 ```
 
@@ -51,7 +61,7 @@ For projects that support modern CSS:
   --10x-surface-canvas: var(--10x-color-base);
   --10x-surface-default: color-mix(in oklch, var(--10x-color-base) 97%, gray);
   --10x-surface-raised: color-mix(in oklch, var(--10x-color-base) 94%, gray);
-  --10x-surface-overlay: var(--10x-color-base);
+  --10x-surface-overlay: color-mix(in oklch, var(--10x-color-base) 88%, gray); /* Elevated overlay — shadow provides primary separation */
 }
 ```
 
@@ -78,7 +88,7 @@ Shadows behave differently in dark mode. Standard black shadows disappear agains
 }
 ```
 
-Note: the `0 0 0 1px` shadow acts as an inset border without affecting layout.
+Note: the `0 0 0 1px` shadow acts as an outset border-like effect without affecting layout (unlike the CSS `border` property, it doesn't shift content).
 
 ## Contrast Validation
 

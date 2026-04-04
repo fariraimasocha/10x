@@ -35,7 +35,7 @@
 
 ### The Core Rule
 
-> Group elements tightly using the smallest acceptable internal spacing, then increase spacing between groups in consistent steps (~1rem / 16px per step-up).
+> Group elements tightly using the smallest acceptable internal spacing, then increase spacing between groups progressively — roughly doubling at each hierarchy level (4-8px within groups → 12-16px between items → 24-32px between sections → 48-96px between page sections).
 
 ### Grouping hierarchy (inside → outside)
 
@@ -60,7 +60,7 @@
 When analyzing existing spacing:
 
 1. Collect all unique spacing values (in px)
-2. Count how many fall on 4pt multiples vs 8pt multiples
-3. If >70% align with 4pt: recommend 4pt scale
-4. If >70% align with 8pt: recommend 8pt scale
+2. Classify each value: **8pt-multiple** (8, 16, 24, 32...) or **4pt-only** (4, 12, 20, 28...) or **off-scale**
+3. If >70% are 8pt-multiples and no 4pt-only values exist: recommend 8pt scale
+4. If >70% land on 4pt multiples (including 8pt values, which are a subset): recommend 4pt scale
 5. Otherwise: recommend 4pt (it's the safer default as a superset of 8pt)

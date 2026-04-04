@@ -65,7 +65,7 @@ Based on findings, propose specific changes:
 3. **Fix dangerous properties** — for each animation targeting a layout property, propose a performant alternative:
    - `width`/`height` → `transform: scale()`
    - `top`/`left` → `transform: translate()`
-   - `margin` → `transform: translate()` or `gap` animation (with caution)
+   - `margin` → flag for manual review. Margin affects document flow; `transform: translate()` only shifts visually without reflowing siblings. Suggest `gap` animation or layout-aware alternatives, but require developer confirmation.
    - `opacity` is safe — keep it
 
 4. **Normalize durations** — map scattered duration values to the three token levels (fast, mid, slow).
@@ -98,4 +98,4 @@ Apply the proposed edits:
 - Preserve existing `@keyframes` names and references — rename only if consolidating duplicates.
 - If the project uses a motion library (Framer Motion, GSAP, Motion One), note this in the report and focus on CSS-level improvements. Do not fight the library.
 - Keep total transition declarations under 3 properties per element. More than that suggests the element needs a different approach.
-- Never animate `color` or `background-color` with durations over 200ms — it looks sluggish.
+- Animate `color` or `background-color` only with the `fast` motion token (typically <=200ms). Using `mid` or `slow` for color transitions looks sluggish.

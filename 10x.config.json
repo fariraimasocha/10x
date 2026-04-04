@@ -16,6 +16,32 @@
     "respectReducedMotion": true,
     "preferTransforms": true
   },
+  "typography": {
+    "baseSizePx": 16,
+    "scaleRatio": "minor-third",
+    "maxFontFamilies": 2,
+    "normaliseToTokens": true
+  },
+  "color": {
+    "baseHue": "auto",
+    "neutralTint": true,
+    "semanticColors": true,
+    "contrastMinimum": "AA",
+    "avoidPureBlackWhite": true,
+    "normaliseToTokens": true
+  },
+  "responsive": {
+    "approach": "mobile-first",
+    "breakpoints": {
+      "sm": "640px",
+      "md": "768px",
+      "lg": "1024px",
+      "xl": "1280px",
+      "2xl": "1536px"
+    },
+    "spacingScale": true,
+    "typographyScale": true
+  },
   "tokens": {
     "outputPath": "./tokens",
     "format": "css-variables"

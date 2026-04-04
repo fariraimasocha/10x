@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SKILLS=("spacing" "depth" "motion" "10x-foundation")
+SKILLS=("spacing" "depth" "motion" "typography" "color" "responsive" "10x-foundation")
 
 get_target_dirs() {
   local dirs=("$HOME/.claude/skills")

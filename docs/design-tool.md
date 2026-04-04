@@ -88,6 +88,16 @@ export interface CommandContext {
   config: TenXConfigResolved;
 }
 
+export interface TenXConfigResolved {
+  spacing: Required<SpacingOptions>;
+  depth: Required<DepthOptions>;
+  motion: Required<MotionOptions>;
+  tokens: { outputPath: string; format: "css-variables" | "dtcg-json" };
+  exclude: string[];
+  /** Set after a successful apply operation in the current session. */
+  lastApplySucceeded?: boolean;
+}
+
 export interface BaseOptions {
   scope?: {
     include?: string[];
@@ -108,7 +118,7 @@ export interface BaseOptions {
    * Adapter hints. These reduce guesswork and increase correctness.
    */
   framework?: "react" | "nextjs" | "vue" | "svelte" | "unknown";
-  styling?: "tailwind" | "css-modules" | "styled-components" | "vanilla-css" | "unknown";
+  styling?: "tailwind" | "css-modules" | "css-in-js" | "vanilla-css" | "unknown";
 }
 
 export interface SpacingOptions extends BaseOptions {
@@ -143,13 +153,17 @@ export interface Finding {
   severity: Severity;
   message: string;
   file?: string;
-  range?: { start: number; end: number }; // byte offsets OR line/col depending on adapter
+  range?:
+    | { type: "byte-offset"; start: number; end: number }
+    | { type: "position"; startLine: number; startCol: number; endLine: number; endCol: number };
   data?: Record<string, unknown>;
 }
 
 export interface TextEdit {
   file: string;
-  range: { start: number; end: number };
+  range:
+    | { type: "byte-offset"; start: number; end: number }
+    | { type: "position"; startLine: number; startCol: number; endLine: number; endCol: number };
   replacement: string;
 }
 
@@ -337,16 +351,14 @@ function parseFlags(tokens: string[]): Record<string, string | boolean | number 
     if (!t.startsWith("--")) continue;
 
     const [k, vInline] = t.slice(2).split("=");
-    const v = vInline ?? tokens[i + 1];
 
-    // boolean flag: --apply
-    if (vInline === undefined && (!v || v.startsWith("--"))) {
+    // boolean flag: --apply (no value follows, or next token is another flag)
+    if (vInline === undefined && (i + 1 >= tokens.length || tokens[i + 1].startsWith("--"))) {
       args[k] = true;
       continue;
     }
 
-    // consume next token if used
-    if (vInline === undefined) i++;
+    const v = vInline ?? tokens[++i];
 
     // naive number coercion
     const num = Number(v);
@@ -365,7 +377,8 @@ export async function executeTenXCommand(
 ): Promise<CommandResult> {
   try {
     const report = await route(inv, ctx);
-    return { ok: true, report, diff: renderDiffIfRequested(report, ctx), applied: report.plan?.edits?.length ? ctx.config.lastApplySucceeded : false };
+    const wasApplied = (report.plan?.edits?.length ?? 0) > 0 && inv.args.mode === "apply";
+    return { ok: true, report, diff: renderDiffIfRequested(report, ctx), applied: wasApplied };
   } catch (err) {
     const error = err instanceof TenXError
       ? err
@@ -402,13 +415,21 @@ export interface SpacingScale {
 }
 
 export function inferSpacingScale(valuesPx: number[]): SpacingScale {
-  // Very simple heuristic: find the most common GCD-ish step.
   const sorted = [...new Set(valuesPx.filter(v => v > 0))].sort((a, b) => a - b);
+
+  if (sorted.length < 2) {
+    return { unit: "px", steps: sorted, confidence: 0.1 };
+  }
+
   const diffs = [];
   for (let i = 1; i < sorted.length; i++) diffs.push(sorted[i] - sorted[i - 1]);
 
   const step = mostCommon(diffs.map(d => nearest([4, 8], d)));
-  const steps = buildSteps(step, Math.max(...sorted));
+  if (step <= 0) {
+    return { unit: "px", steps: sorted, confidence: 0.1 };
+  }
+  const max = sorted.reduce((a, b) => Math.max(a, b), sorted[0] ?? 0);
+  const steps = buildSteps(step, max);
 
   return {
     unit: "px",

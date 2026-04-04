@@ -7,7 +7,7 @@ args:
     description: "Files or glob patterns to analyze (optional, auto-detects if omitted)"
     required: false
   - name: mode
-    description: "analyse | plan | apply (default: plan)"
+    description: "analyze | plan | apply (default: plan)"
     required: false
 ---
 
@@ -22,7 +22,7 @@ You are running the 10x spacing analyzer. Your job is to find spacing inconsiste
 3. Determine the `mode` from args (default: `plan`).
 4. Identify all CSS, SCSS, style files and component files (JSX/TSX/Vue/Svelte) in scope.
 
-## Phase 2: Analyse
+## Phase 2: Analyze
 
 Scan every in-scope file for spacing properties. Collect:
 
@@ -60,7 +60,7 @@ Based on findings, propose specific changes:
 
 Present the plan using the report format from `10x-foundation`.
 
-**Stop here if mode is `analyse` or `plan`.** Show the report and wait for user input.
+**Stop here if mode is `analyze` or `plan`.** Show the report and wait for user input.
 
 ## Phase 4: Apply (only if mode = apply)
 

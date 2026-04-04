@@ -4,6 +4,14 @@
 
 Each level combines two shadow stops for realism: an **ambient** shadow (wide, subtle — simulates diffuse environmental light) and a **key** shadow (tighter, darker — simulates directional light from above).
 
+### Surface Delta
+
+As elements rise in elevation, they should also become slightly lighter to simulate increased ambient light. The "surface delta" in the tables below represents a percentage increase in lightness applied to the element's background color relative to the base surface.
+
+**How to compute**: Given a base surface in HSL (e.g., `hsl(210, 20%, 95%)`), a +3% delta produces `hsl(210, 20%, 98%)`. Use HSL lightness adjustments, CSS `color-mix()`, or preprocessor functions to compute deltas consistently.
+
+**Relationship to shadows**: Surface delta is applied *alongside* shadows, not instead of them. Both work together — the shadow provides depth perception while the tint shift reinforces the visual layer separation.
+
 ### Material-Like Style
 
 Best for: professional apps, dashboards, SaaS products.

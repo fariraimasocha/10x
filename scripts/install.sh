@@ -2,8 +2,9 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-SOURCE_DIR="$SCRIPT_DIR/.claude/skills"
-SKILL_NAMES=("spacing" "depth" "motion" "10x-foundation")
+REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+SOURCE_DIR="$REPO_DIR/skills"
+SKILL_NAMES=("spacing" "depth" "motion" "typography" "color" "responsive" "10x-foundation")
 
 get_target_dirs() {
   local dirs=("$HOME/.claude/skills")
@@ -70,9 +71,12 @@ done
 
 echo ""
 echo "Done. Skills installed for Claude Code + Codex:"
-echo "  /spacing  — Fix spacing inconsistencies"
-echo "  /depth    — Add elevation and visual depth"
-echo "  /motion   — Add purposeful motion and transitions"
+echo "  /spacing     — Fix spacing inconsistencies"
+echo "  /depth       — Add elevation and visual depth"
+echo "  /motion      — Add purposeful motion and transitions"
+echo "  /typography  — Fix type scale, hierarchy, and readability"
+echo "  /color       — Fix color system, palette, and contrast"
+echo "  /responsive  — Fix responsive design and adaptability"
 echo ""
-echo "Claude Code: run /spacing, /depth, /motion"
-echo "Codex: invoke the spacing, depth, or motion skills in your prompt."
+echo "Claude Code: run /spacing, /depth, /motion, /typography, /color, /responsive"
+echo "Codex: invoke skills by name in your prompt (see .codex/instructions.md)"

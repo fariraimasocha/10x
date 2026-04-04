@@ -19,11 +19,13 @@ Check `package.json` dependencies and devDependencies:
 
 | Signal | Styling |
 |--------|---------|
-| `tailwindcss` in devDeps AND `tailwind.config.{js,ts,mjs}` exists | tailwind |
+| `tailwindcss` in deps or devDeps AND `tailwind.config.{js,ts,mjs}` exists | tailwind |
 | Files matching `*.module.css` or `*.module.scss` exist | css-modules |
-| `styled-components` or `@emotion/styled` in deps | styled-components |
-| Only plain `.css` files | vanilla-css |
+| `styled-components` or `@emotion/styled` in deps | css-in-js |
+| Only `.css` files (no `.scss`/`.sass`/`.less`, no `*.module.css`, no CSS-in-JS) | vanilla-css |
 | None detected | unknown |
+
+> **Note:** If a project has both `.css` and `.scss` files without modules or CSS-in-JS, classify as `vanilla-css`. If preprocessor files dominate, classify as `unknown` and note the preprocessor usage.
 
 ## Framework-Specific Guidance
 
