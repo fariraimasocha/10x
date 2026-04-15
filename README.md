@@ -95,6 +95,41 @@ Use $polish in plan mode across the app shell.
 | `responsive` | Rigid widths, stacking, breakpoints, mobile-first spacing/type. | Mobile-first layout transformations with risk ratings. |
 | `polish` | Runs the six quality skills against one shared scope. | One merged report with conflicts resolved before edits. |
 
+## Polish Orchestrator
+
+`/polish` is the coordinated pass for improving a UI across multiple quality dimensions without getting six separate reports. It loads config and resolves scope once, runs the individual skills in a fixed order, then merges findings, proposed edits, and generated tokens into one report.
+
+Execution order:
+
+```text
+typography -> color -> spacing -> depth -> motion -> responsive
+```
+
+That order keeps recommendations aligned: typography establishes hierarchy, color establishes palette roles, spacing establishes rhythm, depth builds on surfaces, motion reinforces state changes, and responsive consumes the spacing/type decisions last.
+
+Supported flags:
+
+| Flag | Behavior |
+| --- | --- |
+| `--scope` | Limit the pass to files, folders, or glob patterns. |
+| `--mode` | Choose `analyse`, `plan`, or `apply`; defaults to `plan`. |
+| `--only` | Run a comma-separated subset, such as `typography,color`. |
+| `--skip` | Exclude a comma-separated subset from the default full pass. |
+
+Examples:
+
+```bash
+/polish
+/polish --only typography,color
+/polish --skip motion --scope src/components
+```
+
+```text
+Use $polish in plan mode across src/components, skipping motion.
+```
+
+The output is one merged 10x report: a top-line summary, per-skill findings, one consolidated plan table, and generated tokens grouped by domain.
+
 ## How It Works
 
 Each skill follows the same four phases:

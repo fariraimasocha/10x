@@ -93,6 +93,16 @@ These rules keep Claude Code and Codex behavior aligned:
 9. Do not modify generated files, vendor code, minified files, or third-party component internals.
 10. If the requested scope would produce more than 20 issues in one file, summarize the dominant patterns and ask the user to narrow the scope before applying.
 
+## Confidence Metric
+
+Confidence is a practical edit-readiness heuristic, not a statistical score:
+
+- **High confidence (80%+)**: The issue comes from a direct property/class match, local context is clear, project token or styling conventions are obvious, and the proposed edit is low risk.
+- **Medium confidence (50-79%)**: The pattern is clear, but intent, component role, or exact token mapping is partly inferred. Include the edit in `plan` mode with risk and rationale; do not apply automatically unless the user explicitly confirms the tradeoff.
+- **Low confidence (<50%)**: Component semantics are ambiguous, design tokens conflict, the change affects semantic color or responsive visibility, the edit requires structural layout changes, or necessary context is missing. Report and defer with the confirmation needed.
+
+Apply mode should only make high-confidence edits. Medium- and low-confidence findings stay in the report as deferred or confirmation-needed items.
+
 ## Design Principles (summary)
 
 These rules drive all 10x analysis:
