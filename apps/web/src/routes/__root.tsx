@@ -27,11 +27,11 @@ export const Route = createRootRoute({
         content:
           '10x is a dependency-free skill pack for Claude Code and Codex that improves typography, color, spacing, depth, motion, and responsive quality.',
       },
-      { property: 'og:image', content: 'https://10x.fariraimasocha.co.zw/10x.png?v=2' },
-      { property: 'og:image:secure_url', content: 'https://10x.fariraimasocha.co.zw/10x.png?v=2' },
-      { property: 'og:image:type', content: 'image/png' },
-      { property: 'og:image:width', content: '3024' },
-      { property: 'og:image:height', content: '1714' },
+      { property: 'og:image', content: 'https://10x.fariraimasocha.co.zw/10x-og.jpg' },
+      { property: 'og:image:secure_url', content: 'https://10x.fariraimasocha.co.zw/10x-og.jpg' },
+      { property: 'og:image:type', content: 'image/jpeg' },
+      { property: 'og:image:width', content: '1200' },
+      { property: 'og:image:height', content: '630' },
       { property: 'og:image:alt', content: '10x — AI skills for systematic UI polish' },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:site', content: '@fariraijames' },
@@ -42,7 +42,7 @@ export const Route = createRootRoute({
         content:
           '10x is a dependency-free skill pack for Claude Code and Codex that improves typography, color, spacing, depth, motion, and responsive quality.',
       },
-      { name: 'twitter:image', content: 'https://10x.fariraimasocha.co.zw/10x.png?v=2' },
+      { name: 'twitter:image', content: 'https://10x.fariraimasocha.co.zw/10x-og.jpg' },
       { name: 'twitter:image:alt', content: '10x — AI skills for systematic UI polish' },
     ],
     links: [
