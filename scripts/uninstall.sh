@@ -1,7 +1,44 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SKILLS=("spacing" "depth" "motion" "typography" "color" "responsive" "10x-foundation")
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+SOURCE_DIR="$REPO_DIR/skills"
+DRY_RUN=false
+
+usage() {
+  cat <<'EOF'
+Usage: ./scripts/uninstall.sh [--dry-run]
+
+Options:
+  --dry-run   Print the 10x symlinks that would be removed without changing files.
+  -h, --help  Show this help.
+EOF
+}
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --dry-run)
+      DRY_RUN=true
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "Error: Unknown option: $1" >&2
+      usage >&2
+      exit 1
+      ;;
+  esac
+  shift
+done
+
+SKILL_NAMES=()
+for skill_dir in "$SOURCE_DIR"/*/; do
+  [ -f "$skill_dir/SKILL.md" ] || continue
+  SKILL_NAMES+=("$(basename "$skill_dir")")
+done
 
 get_target_dirs() {
   local dirs=("$HOME/.claude/skills")
@@ -27,19 +64,34 @@ remove_from_dir() {
   local skills_dir="$1"
   local removed=false
 
-  echo "10x — Removing skills from $skills_dir"
+  echo "10x - Removing skills from $skills_dir"
 
-  for skill_name in "${SKILLS[@]}"; do
+  for skill_name in "${SKILL_NAMES[@]}"; do
     local target="$skills_dir/$skill_name"
-    if [ -L "$target" ] || [ -d "$target" ]; then
-      rm -rf "$target"
-      echo "  Removed $skill_name"
-      removed=true
+    local expected="$SOURCE_DIR/$skill_name"
+
+    if [ ! -L "$target" ]; then
+      continue
     fi
+
+    local actual
+    actual="$(readlink "$target")"
+    if [ "$actual" != "$expected" ]; then
+      echo "  Skipped $skill_name: symlink points to $actual"
+      continue
+    fi
+
+    if [ "$DRY_RUN" = true ]; then
+      echo "  Would remove $target"
+    else
+      rm "$target"
+      echo "  Removed $skill_name"
+    fi
+    removed=true
   done
 
   if [ "$removed" = false ]; then
-    echo "  No 10x skills found"
+    echo "  No 10x-managed skill symlinks found"
   fi
 }
 
@@ -52,4 +104,8 @@ for skills_dir in "${TARGET_DIRS[@]}"; do
   remove_from_dir "$skills_dir"
 done
 
-echo "Done."
+if [ "$DRY_RUN" = true ]; then
+  echo "Dry run complete. No files changed."
+else
+  echo "Done."
+fi

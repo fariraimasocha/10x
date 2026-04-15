@@ -26,6 +26,7 @@ You are running the 10x typography analyzer. Your job is to find typography inco
 4. Determine the `mode` from args (default: `plan`).
 5. Determine the `scale-ratio` from args or config (default: `minor-third` / 1.2).
 6. Identify all CSS, SCSS, style files and component files (JSX/TSX/Vue/Svelte) in scope.
+7. Follow the **Agent Execution Rules** in `10x-foundation`, especially the `analyse`/`plan`/`apply` boundary.
 
 ## Phase 2: Analyse
 

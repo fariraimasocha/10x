@@ -1,0 +1,5 @@
+interface:
+  display_name: "10x Polish"
+  short_description: "Run all 10x UI skills as one polish pass."
+  brand_color: "#111827"
+  default_prompt: "Use $polish in plan mode to analyse the current UI with all 10x quality skills."

@@ -7,7 +7,7 @@ args:
     description: "Files or glob patterns to analyze (optional, auto-detects if omitted)"
     required: false
   - name: mode
-    description: "analyze | plan | apply (default: plan)"
+    description: "analyse | plan | apply (default: plan)"
     required: false
   - name: base-hue
     description: "Primary brand hue to build the palette from: blue | purple | green | red | orange | teal | indigo | custom hex (default: auto-detect from codebase)"
@@ -26,6 +26,7 @@ You are running the 10x color analyzer. Your job is to find inconsistent, unsyst
 4. Determine `mode` from args (default: `plan`).
 5. Determine `base-hue` from args or config. If not provided, auto-detect the dominant brand color from the codebase.
 6. Identify all CSS, SCSS, style files and component files (JSX/TSX/Vue/Svelte) in scope.
+7. Follow the **Agent Execution Rules** in `10x-foundation`, especially the `analyse`/`plan`/`apply` boundary.
 
 ## Phase 2: Analyse
 
@@ -124,7 +125,7 @@ Based on findings, propose specific changes:
 
 Present the plan using the report format from `10x-foundation`.
 
-**Stop here if mode is `analyze` or `plan`.** Show the report and wait for user input.
+**Stop here if mode is `analyse` or `plan`.** Show the report and wait for user input.
 
 ## Phase 4: Apply (only if mode = apply)
 

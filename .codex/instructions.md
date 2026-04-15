@@ -12,6 +12,7 @@ You have access to the **10x UI upgrade engine** — a set of design analysis sk
 | `typography` | Fixes type scale, hierarchy, line-height, letter-spacing, weight, font usage, and alignment. |
 | `color` | Fixes color system, palette generation, contrast, and semantic color roles. |
 | `responsive` | Converts fixed layouts to fluid systems. Enforces mobile-first breakpoints, responsive spacing, and typography scaling. |
+| `polish` | Runs all six UI quality skills against one shared scope and produces one merged report. |
 
 ## How to Use
 
@@ -20,6 +21,8 @@ Each skill runs in three modes:
 - **plan** — report issues + show proposed fixes (default)
 - **apply** — report + fix
 
+Use only `analyse`, `plan`, and `apply` as mode values. If the user says "analyze", normalize it to `analyse`. Never edit files in `analyse` or `plan` mode.
+
 ### Example Prompts
 
 ```
@@ -27,8 +30,9 @@ Use $spacing in apply mode for src/components.
 Use $depth with shadow-style soft-ui.
 Use $typography with scale-ratio major-third.
 Use $motion in plan mode.
-Use $color to analyze the palette.
+Use $color to analyse the palette.
 Use $responsive to check layout adaptability.
+Use $polish in plan mode across the app shell.
 ```
 
 ## Skill Files

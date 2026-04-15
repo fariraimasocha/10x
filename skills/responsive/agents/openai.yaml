@@ -1,0 +1,5 @@
+interface:
+  display_name: "10x Responsive"
+  short_description: "Find rigid layouts and responsive design gaps."
+  brand_color: "#06B6D4"
+  default_prompt: "Use $responsive in plan mode to analyse mobile-first layout and breakpoint issues."

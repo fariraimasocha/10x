@@ -24,6 +24,7 @@ You are running the 10x depth analyzer. Your job is to identify flat or inconsis
 2. Read `reference/elevation-tokens.md` for the elevation scale and shadow recipes.
 3. Read `reference/theme-surfaces.md` for light/dark mode surface rules.
 4. Determine `mode` (default: `plan`) and `shadow-style` (default: `material-like`) from args or config.
+5. Follow the **Agent Execution Rules** in `10x-foundation`, especially the `analyse`/`plan`/`apply` boundary.
 
 ## Phase 2: Analyse
 

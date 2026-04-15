@@ -1,0 +1,5 @@
+interface:
+  display_name: "10x Depth"
+  short_description: "Normalize elevation, surfaces, and shadows."
+  brand_color: "#6366F1"
+  default_prompt: "Use $depth in plan mode to analyse surface layering and shadow consistency."

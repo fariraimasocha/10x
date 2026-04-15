@@ -1,0 +1,5 @@
+interface:
+  display_name: "10x Spacing"
+  short_description: "Find and fix inconsistent UI spacing."
+  brand_color: "#3B82F6"
+  default_prompt: "Use $spacing in plan mode to analyse spacing consistency in the current UI scope."

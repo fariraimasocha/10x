@@ -1,0 +1,5 @@
+interface:
+  display_name: "10x Typography"
+  short_description: "Normalize type scale, hierarchy, and text rhythm."
+  brand_color: "#8B5CF6"
+  default_prompt: "Use $typography in plan mode to analyse type scale, hierarchy, and font consistency."

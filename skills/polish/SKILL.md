@@ -40,6 +40,7 @@ The sub-skills are neutral instruments. They respond to whatever dominant signal
    - If `only` is provided: run only those.
    - If `skip` is provided: remove those from the default list.
 4. Validate that each requested skill exists under `skills/`. Abort with a clear message if one is missing.
+5. Follow the **Agent Execution Rules** in `10x-foundation`, especially the `analyse`/`plan`/`apply` boundary.
 
 ## Phase 2: Ask (Analyse)
 

@@ -26,6 +26,7 @@ You are running the 10x responsive design analyzer. Your job is to find responsi
 4. Determine the `mode` from args (default: `plan`).
 5. Determine the `focus` from args (default: `all`). If a specific focus is given, only run that sub-analysis.
 6. Identify all CSS, SCSS, style files and component files (JSX/TSX/Vue/Svelte) in scope.
+7. Follow the **Agent Execution Rules** in `10x-foundation`, especially the `analyse`/`plan`/`apply` boundary.
 
 ## Phase 2: Analyse
 
@@ -106,7 +107,7 @@ Flag each as: `info` (could benefit from visibility control), `warn` (content pr
 - Raw code (the problematic class string or CSS declaration)
 - Severity (warn | info)
 
-**Stop here if mode is `analyse`.** Show the findings report and wait for user input.
+If mode is `analyse`, stop here. Show the findings report and do not propose or apply edits.
 
 ## Phase 3: Plan
 
@@ -146,7 +147,7 @@ Based on findings, propose specific responsive transformations:
 
 Present the plan using the report format from `10x-foundation`.
 
-**Stop here if mode is `plan`.** Show the report with proposed fixes and wait for user input.
+If mode is `plan`, stop here. Show the report with proposed fixes and do not apply edits.
 
 ## Phase 4: Apply (only if mode = apply)
 

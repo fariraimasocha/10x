@@ -24,6 +24,7 @@ You are running the 10x motion analyzer. Your job is to find motion issues (miss
 2. Read `reference/motion-tokens.md` for duration/easing presets and safe property lists.
 3. Read `reference/reduced-motion.md` for accessibility patterns.
 4. Determine `mode` (default: `plan`) and `style` (default: `standard`) from args or config.
+5. Follow the **Agent Execution Rules** in `10x-foundation`, especially the `analyse`/`plan`/`apply` boundary.
 
 ## Phase 2: Analyse
 

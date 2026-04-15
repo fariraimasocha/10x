@@ -1,0 +1,5 @@
+interface:
+  display_name: "10x Color"
+  short_description: "Audit palettes, contrast, and color tokens."
+  brand_color: "#10A37F"
+  default_prompt: "Use $color in plan mode to analyse the palette, contrast, and token opportunities."

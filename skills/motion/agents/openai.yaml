@@ -1,0 +1,5 @@
+interface:
+  display_name: "10x Motion"
+  short_description: "Audit transitions, animation safety, and motion tokens."
+  brand_color: "#F59E0B"
+  default_prompt: "Use $motion in plan mode to analyse animations, transitions, and reduced-motion support."

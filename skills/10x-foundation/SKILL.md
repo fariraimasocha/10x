@@ -78,6 +78,21 @@ All 10x skills produce a structured report. Use this format:
 {If applicable, show proposed token definitions}
 ```
 
+## Agent Execution Rules
+
+These rules keep Claude Code and Codex behavior aligned:
+
+1. Use only these modes: `analyse`, `plan`, and `apply`. If the user says `analyze`, treat it as `analyse` and report the normalized mode.
+2. Default to `plan` unless the user explicitly asks for `analyse` or `apply`.
+3. Never change files in `analyse` or `plan` mode.
+4. In `apply` mode, inspect the relevant files first, then make scoped edits file by file.
+5. Findings must include file paths and line numbers whenever the issue comes from code.
+6. Proposed edits must be concrete: state the old value/pattern, the new value/pattern, and the risk level.
+7. If confidence is below 80%, report the issue and defer the edit instead of guessing.
+8. Preserve existing design system tokens. Extend or map to them before introducing `--10x-*` tokens.
+9. Do not modify generated files, vendor code, minified files, or third-party component internals.
+10. If the requested scope would produce more than 20 issues in one file, summarize the dominant patterns and ask the user to narrow the scope before applying.
+
 ## Design Principles (summary)
 
 These rules drive all 10x analysis:

@@ -2,423 +2,180 @@
 
 # 10x
 
-### Ship polished UI — stop pixel-guessing.
+### AI skills for systematic UI polish.
 
 [![Claude Code](https://img.shields.io/badge/Claude_Code-skill-7c3aed?style=flat-square)](https://docs.anthropic.com/en/docs/claude-code)
 [![Codex](https://img.shields.io/badge/OpenAI_Codex-compatible-10a37f?style=flat-square)](https://openai.com/codex)
 [![License: MIT](https://img.shields.io/badge/License-MIT-f59e0b?style=flat-square)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-6-3b82f6?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-7-3b82f6?style=flat-square)](#skills)
 
-Six AI design skills — **spacing, depth, typography, motion, color, responsive** — that analyze any web codebase and apply systematic fixes.
+Six focused UI quality skills plus one orchestrator: **typography, color, spacing, depth, motion, responsive**, and **polish**.
 
-No runtime. No dependencies. Just design knowledge your AI agent can use.
-
-[**Install**](#install) · [**Usage**](#usage) · [**Skills**](#skills) · [**Configuration**](#configuration) · [**Contributing**](#contributing)
+[Install](#install) · [Usage](#usage) · [Skills](#skills) · [Configuration](#configuration) · [Contributing](#contributing)
 
 </div>
 
 ---
 
-## Quick start
+## What 10x Is
 
-```bash
-git clone https://github.com/fariraimasocha/10x.git && cd 10x && ./scripts/install.sh
-```
+10x is a dependency-free skill pack for Claude Code and Codex. It gives your agent concrete procedures for finding UI inconsistencies, proposing reviewable fixes, and applying changes only when you explicitly ask for `apply` mode.
 
-Then in any project:
-
-```bash
-/spacing                    # plan mode — report only
-/typography --mode apply    # apply fixes
-/polish                     # run all six skills end-to-end
-```
-
----
-
-## Why 10x?
-
-Most UI issues aren't bugs — they're inconsistencies. A `14px` that should be `16px`. A shadow that doesn't match the rest. A heading that's the same weight as body text. These compound into UIs that feel "off" without anyone knowing why.
-
-10x gives your AI coding agent a structured design vocabulary. Instead of vague instructions like "make it look better", you run `/spacing` and get a concrete report: which values are off-scale, what to change, and why.
-
-**Example:** `/spacing --mode apply` on a component file:
-
-```diff
-- padding: 14px;     /* off-scale */
-+ padding: 16px;     /* --10x-space-4 */
-- gap: 10px;
-+ gap: 12px;         /* --10x-space-3 */
-- padding: 18px;
-+ padding: 16px;     /* --10x-space-4 */
-```
-
-> 3 issues found · 3 fixed · 0 deferred
-
----
-
-## Skills
-
-Each skill targets one dimension of UI quality. Run them independently or in sequence.
-
-| Skill | What it does | Key flags |
-|:------|:-------------|:----------|
-| **`spacing`** | Enforces 4pt/8pt scale. Fixes the "tight inside groups, loose between groups" rule. Normalizes to spacing tokens. | `--scope`, `--mode` |
-| **`depth`** | Multi-stop shadows (ambient + key), surface layering, elevation tokens. Light/dark theme aware. | `--shadow-style`, `--mode` |
-| **`typography`** | Ratio-based type scale, hierarchy enforcement, line-height/tracking, weight contrast, font consolidation. | `--scale-ratio`, `--mode` |
-| **`motion`** | Tokenized durations and easing. Flags dangerous properties (`width`, `height`, `margin`). Always adds `prefers-reduced-motion`. | `--style`, `--mode` |
-| **`color`** | Single-hue palette generation, brand-tinted neutrals, semantic roles (success/error/warning), WCAG AA contrast. | `--mode` |
-| **`responsive`** | Mobile-first conversion, fluid layouts, responsive spacing/typography scaling, content stacking. | `--focus`, `--mode` |
-
-### Modes
-
-Every skill supports three modes:
-
-| Mode | Behavior |
-|:-----|:---------|
-| `analyse` | Scan and report issues only |
-| `plan` | Report + show proposed fixes with risk ratings **(default)** |
-| `apply` | Report + fix. Shows each change before applying it |
-
----
+It is not a runtime library and it does not ship a deterministic scanner yet. The source of truth is structured Markdown in `skills/`, backed by reference docs for scales, tokens, accessibility rules, and responsive patterns.
 
 ## Install
 
 ```bash
 git clone https://github.com/fariraimasocha/10x.git
 cd 10x
+./scripts/install.sh --dry-run
 ./scripts/install.sh
 ```
 
-The install script symlinks skills into:
+The installer symlinks every skill into the available agent skill directories:
 
-| Agent | Location |
-|:------|:---------|
+| Agent | Target |
+| --- | --- |
 | Claude Code | `~/.claude/skills/` |
-| Codex | `$CODEX_HOME/skills` or `~/.codex/skills` |
+| Codex | `$CODEX_HOME/skills`, `~/.codex/skills`, or `~/.agents/skills` when present |
 
-To remove: `./scripts/uninstall.sh`
-
-### Update
-
-To pull new skills as they're pushed:
+Useful commands:
 
 ```bash
-cd path/to/10x
-./scripts/update.sh
+./scripts/install.sh --verify     # check installed symlinks
+./scripts/uninstall.sh --dry-run  # preview removal
+./scripts/uninstall.sh            # remove 10x skills
+./scripts/update.sh               # pull latest main and refresh symlinks
 ```
-
-This fetches the latest from `main` and refreshes symlinks. Re-run it any time new skills are released. The working tree must be clean and on `main`.
-
----
 
 ## Usage
 
+All skills use the same modes:
+
+| Mode | Behavior |
+| --- | --- |
+| `analyse` | Scan and report findings only. |
+| `plan` | Report findings plus concrete proposed edits. This is the default. |
+| `apply` | Make scoped edits after inspecting the relevant files. |
+
+`analyze` is accepted as user language, but the skills normalize the mode to `analyse`.
+
 ### Claude Code
 
-Open any project and run slash commands:
+Run skills as slash commands from the target project:
 
 ```bash
-# Spacing
-/spacing                              # plan mode (default)
-/spacing --mode apply                 # auto-fix spacing issues
-/spacing --scope src/components       # limit to specific files
-
-# Depth
-/depth                                # analyze shadows and surfaces
-/depth --shadow-style soft-ui         # use soft-ui shadow style
-
-# Typography
-/typography                           # analyze type system
-/typography --scale-ratio perfect-fourth  # use 1.333 ratio
-
-# Motion
-/motion                               # analyze animations
-/motion --style expressive            # use expressive timing
-
-# Color
-/color                                # analyze color usage
-/color --mode apply                   # auto-fix color issues
-
-# Responsive
-/responsive                           # analyze responsive design
-/responsive --focus layout            # focus on layout issues
+/spacing
+/typography --mode apply --scope src/components
+/color --mode analyse
+/responsive --focus layout
+/polish
 ```
 
 ### Codex
 
 Reference skills by name in your prompt:
 
-```
-Use $spacing in apply mode for src/components.
-Use $depth with shadow-style soft-ui.
-Use $typography with scale-ratio major-third.
-Use $motion in plan mode.
-Use $color to analyze the palette.
-Use $responsive to check layout adaptability.
+```text
+Use $spacing in plan mode for src/components.
+Use $typography in apply mode for the dashboard components.
+Use $color to analyse the palette and contrast.
+Use $polish in plan mode across the app shell.
 ```
 
----
+## Skills
 
-## Configuration
-
-Drop a `10x.config.json` in your target project root to customize behavior:
-
-```jsonc
-{
-  "spacing": {
-    "baseUnit": "rem",        // rem | px
-    "gridStep": 4,            // 4 (4pt scale) or 8 (8pt scale)
-    "groupStepRem": 1.0       // step-up between groups
-  },
-  "depth": {
-    "shadowStyle": "material-like",  // material-like | soft-ui | flat
-    "elevationLevels": 5,
-    "themeModes": ["light", "dark"]
-  },
-  "typography": {
-    "baseSizePx": 16,
-    "scaleRatio": "minor-third",     // minor-second | major-second | minor-third | major-third | perfect-fourth
-    "maxFontFamilies": 2
-  },
-  "motion": {
-    "style": "standard",            // subtle | standard | expressive
-    "respectReducedMotion": true,
-    "preferTransforms": true
-  },
-  "color": {
-    "baseHue": "auto",              // auto-detect from existing code, or a number (0-360)
-    "neutralTint": true,            // tint grays with brand hue
-    "contrastMinimum": "AA"         // AA | AAA
-  },
-  "responsive": {
-    "approach": "mobile-first",
-    "breakpoints": { "sm": "640px", "md": "768px", "lg": "1024px", "xl": "1280px" },
-    "spacingScale": true,
-    "typographyScale": true
-  },
-  "exclude": ["node_modules", "dist", ".next", "build"]
-}
-```
-
-No config? Sensible defaults are used and the framework/styling approach is auto-detected from `package.json`.
-
----
-
-## Supported Stacks
-
-| Framework | Styling |
-|:----------|:--------|
-| React / Next.js | Tailwind CSS |
-| Vue | CSS Modules |
-| Svelte | Styled Components |
-| Plain HTML | Vanilla CSS / SCSS |
-
-Skills auto-detect your stack and adapt their analysis. Tailwind projects get class-level suggestions (`p-4` instead of `padding: 1rem`). CSS projects get custom property tokens.
-
----
+| Skill | What it checks | Typical output |
+| --- | --- | --- |
+| `spacing` | Off-scale padding, margin, gaps, grouping rhythm, token opportunities. | Old spacing value -> nearest scale value, risk-rated by layout impact. |
+| `typography` | Type scale, hierarchy, line-height, tracking, weight, font proliferation. | Type token proposal and concrete class/CSS replacements. |
+| `color` | Palette fragmentation, contrast, semantic roles, hardcoded colors. | Brand/neutral/semantic scale proposal and token mappings. |
+| `depth` | Surface layers, shadows, elevation roles, z-index consistency. | Elevation token proposal and shadow/surface normalization. |
+| `motion` | Transition safety, duration/easing drift, reduced-motion support. | Motion token proposal and safe transform/opacity changes. |
+| `responsive` | Rigid widths, stacking, breakpoints, mobile-first spacing/type. | Mobile-first layout transformations with risk ratings. |
+| `polish` | Runs the six quality skills against one shared scope. | One merged report with conflicts resolved before edits. |
 
 ## How It Works
 
-10x skills are **markdown files**, not code. Each skill contains:
+Each skill follows the same four phases:
 
-1. **`SKILL.md`** — A structured procedure (Prepare, Analyse, Plan, Apply) that the AI agent follows step-by-step
-2. **`reference/`** — Design knowledge: canonical scales, token formats, anti-patterns, and best practices
-
-The AI agent reads your code, applies the design heuristics from the skill's reference materials, and produces a structured report with findings, a plan, risk ratings, and token definitions.
-
-### The 4-Phase Workflow
-
-Every skill follows the same pattern:
-
-```
-Phase 1: Prepare     Load config, detect framework, resolve file scope
-                     ↓
-Phase 2: Analyse     Scan files for relevant properties, record findings
-                     ↓
-Phase 3: Plan        Map findings to fixes, rate risk, propose tokens
-                     ↓
-Phase 4: Apply       Execute edits (only if mode=apply)
+```text
+Prepare -> Analyse -> Plan -> Apply
 ```
 
-### Design Principles
+- **Prepare** loads `10x.config.json`, detects framework/styling, and resolves scope.
+- **Analyse** scans files and records line-referenced findings.
+- **Plan** proposes concrete edits with risk levels and token definitions.
+- **Apply** edits files only when the user explicitly requests `apply`.
 
-These rules drive all analysis. They're ordered by priority — fix spacing before depth, depth before motion:
+Shared behavior lives in `skills/10x-foundation/SKILL.md`. Individual skills contain only domain-specific checks and rules.
 
-| Principle | Core rule |
-|:----------|:----------|
-| **Spacing** | Group elements tightly, step up between groups by consistent increments (~1rem). Use a 4pt or 8pt scale. |
-| **Depth** | Layer with 3-4 shades of one color + multi-stop shadows (ambient + key). Consistent across light/dark themes. |
-| **Typography** | Ratio-based scale from a single base size. Clear hierarchy through size, weight, and color. 1-2 font families max. |
-| **Motion** | Tokenize durations/easing. Only animate `transform` and `opacity`. Always support `prefers-reduced-motion`. |
-| **Color** | One base hue, full 50-900 scale. 80% neutrals, 15% brand, 5% semantic. WCAG AA minimum contrast. |
-| **Responsive** | Mobile-first, fluid systems. Spacing and typography scale with viewport. Content stacks vertically on mobile. |
+## Configuration
 
-### Token System
+Put `10x.config.json` in the target project root to customize behavior:
 
-All skills generate tokens in a consistent naming convention:
-
-```css
-/* Pattern: --10x-{category}-{name} */
-
---10x-space-4: 1rem;                     /* Spacing */
---10x-shadow-2: 0 2px 6px ...;           /* Depth */
---10x-type-size-xl: 1.44rem;             /* Typography */
---10x-duration-fast: 120ms;              /* Motion */
---10x-color-brand-600: hsl(220, 86%, 48%);  /* Color */
+```jsonc
+{
+  "spacing": { "baseUnit": "rem", "gridStep": 4, "groupStepRem": 1.0 },
+  "depth": { "shadowStyle": "material-like", "elevationLevels": 5, "themeModes": ["light", "dark"] },
+  "typography": { "baseSizePx": 16, "scaleRatio": "minor-third", "maxFontFamilies": 2 },
+  "motion": { "style": "standard", "respectReducedMotion": true, "preferTransforms": true },
+  "color": { "baseHue": "auto", "neutralTint": true, "contrastMinimum": "AA" },
+  "responsive": {
+    "approach": "mobile-first",
+    "breakpoints": { "sm": "640px", "md": "768px", "lg": "1024px", "xl": "1280px" }
+  },
+  "tokens": { "outputPath": "./tokens", "format": "css-variables" },
+  "exclude": ["node_modules", "dist", ".next", "build", "vendor", "*.min.css"]
+}
 ```
 
-Tokens can be output as CSS custom properties (default) or DTCG JSON for Figma/Style Dictionary interop. Tailwind projects get `theme.extend` mappings.
-
----
+If no config exists, the foundation skill uses the defaults bundled in this repo.
 
 ## Project Structure
 
-```
+```text
 10x/
-+-- skills/                   # Shared source of truth (all skill definitions)
-|   +-- 10x-foundation/       #   Config loading, framework detection, tokens, principles
-|   |   +-- SKILL.md
-|   |   +-- reference/
-|   |       +-- design-principles.md
-|   |       +-- framework-detection.md
-|   |       +-- token-format.md
-|   +-- spacing/
-|   |   +-- SKILL.md
-|   |   +-- reference/
-|   |       +-- spacing-scale.md
-|   +-- depth/
-|   |   +-- SKILL.md
-|   |   +-- reference/
-|   |       +-- elevation-tokens.md
-|   |       +-- theme-surfaces.md
-|   +-- typography/
-|   |   +-- SKILL.md
-|   |   +-- reference/
-|   |       +-- type-scale.md
-|   |       +-- type-hierarchy.md
-|   +-- motion/
-|   |   +-- SKILL.md
-|   |   +-- reference/
-|   |       +-- motion-tokens.md
-|   |       +-- reduced-motion.md
-|   +-- color/
-|   |   +-- SKILL.md
-|   |   +-- reference/
-|   |       +-- color-scale.md
-|   |       +-- color-system.md
-|   +-- responsive/
-|       +-- SKILL.md
-|       +-- reference/
-|           +-- breakpoint-system.md
-|           +-- responsive-patterns.md
-+-- .claude/                  # Claude Code integration
-|   +-- skills/               #   Symlinks -> skills/ (auto-discovery)
-|   +-- settings.local.json
-+-- .codex/                   # Codex integration
-|   +-- instructions.md       #   References skills/ for Codex agents
-+-- scripts/
-|   +-- install.sh
-|   +-- uninstall.sh
-+-- docs/
-|   +-- design-tool.md        # Architecture deep-dive
-+-- 10x.config.json           # Default configuration
-+-- README.md
+|-- skills/
+|   |-- 10x-foundation/
+|   |-- spacing/
+|   |-- typography/
+|   |-- color/
+|   |-- depth/
+|   |-- motion/
+|   |-- responsive/
+|   `-- polish/
+|-- scripts/
+|   |-- install.sh
+|   |-- uninstall.sh
+|   `-- update.sh
+|-- docs/
+|   `-- design-tool.md
+|-- 10x.config.json
+`-- README.md
 ```
-
-> **Key architecture decision**: Skill definitions live in `skills/` at the repo root — a framework-agnostic shared location. Both `.claude/skills/` (symlinks) and `.codex/instructions.md` reference this same source. The install script symlinks from `skills/` to the agent's global directory.
-
----
 
 ## Contributing
 
-Want to add a new skill, improve an existing one, or fix a reference doc? Here's how.
+This repo is a skill distribution, so quality mostly comes from clear procedures and reliable boundaries.
 
-### Understanding the Codebase
+When changing a skill:
 
-This is **not a traditional code project**. There is no TypeScript, no build step, no tests to run. The entire system is structured markdown that AI agents interpret at runtime.
+- Keep `SKILL.md` concise and procedural.
+- Put detailed design knowledge in `reference/`.
+- Use the shared `analyse | plan | apply` contract.
+- Include line-referenced findings and concrete proposed edits.
+- Add or update `agents/openai.yaml` for public skills.
+- Prefer reporting over editing when confidence is below 80%.
 
-| You're looking at... | What it is |
-|:---------------------|:-----------|
-| `skills/{name}/SKILL.md` | The skill's **procedure** — step-by-step instructions the AI follows |
-| `skills/{name}/reference/*.md` | **Design knowledge** — scales, tokens, rules, anti-patterns |
-| `skills/10x-foundation/` | **Shared infrastructure** — config loading, framework detection, output format, core principles |
-| `10x.config.json` | **Default configuration** — sensible defaults for all skills |
-| `scripts/install.sh` | **Installer** — symlinks skills to agent directories |
+When adding a new public skill:
 
-### Adding a New Skill
-
-1. **Create the skill directory:**
-
-```
-skills/your-skill/
-├── SKILL.md
-└── reference/
-    └── your-reference.md
-```
-
-2. **Write `SKILL.md`** with this frontmatter:
-
-```yaml
----
-name: your-skill
-description: "One-line description of what it does"
-user-invokable: true
-args:
-  - name: scope
-    description: "Files or glob patterns to analyze"
-    required: false
-  - name: mode
-    description: "analyse | plan | apply (default: plan)"
-    required: false
----
-```
-
-3. **Follow the 4-phase structure** (Prepare, Analyse, Plan, Apply). Phase 1 must reference `10x-foundation` for config/framework detection.
-
-4. **Write reference docs** in `reference/`. These contain the domain knowledge: canonical values, token naming, anti-patterns, best practices.
-
-5. **Wire it up:**
-   - Add a symlink in `.claude/skills/`: `ln -s ../../skills/your-skill .claude/skills/your-skill`
-   - Add the skill name to `SKILL_NAMES` in `scripts/install.sh` and `scripts/uninstall.sh`
-   - Add a `your-skill` section to `10x.config.json` with default values
-   - Add the skill to `skills/10x-foundation/SKILL.md` (defaults + principles summary)
-   - Add the skill to `skills/10x-foundation/reference/design-principles.md`
-   - Add the skill's tokens to `skills/10x-foundation/reference/token-format.md`
-   - Add the skill to `.codex/instructions.md`
-   - Add a row to the skills table in this README
-
-6. **Test it** by running `/your-skill` in Claude Code against a sample project.
-
-### Improving an Existing Skill
-
-- **SKILL.md** controls what the AI does. Edit the phases, analysis checks, or rules.
-- **reference/*.md** controls what the AI knows. Edit the scales, token values, or anti-patterns.
-- **Changes to `10x-foundation/`** affect all skills — be careful with the output format and config schema.
-
-### Conventions
-
-| Convention | Details |
-|:-----------|:--------|
-| Token naming | `--10x-{category}-{name}` (e.g., `--10x-space-4`, `--10x-type-size-xl`) |
-| Skill args | Always include `scope` (optional) and `mode` (default: `plan`) |
-| Risk ratings | `low` (cosmetic), `medium` (may shift layout), `high` (structural change) |
-| Severity levels | `info` (suggestion), `warn` (likely issue), `error` (definite problem) |
-| Conservative by default | Report rather than fix when confidence < 80% |
-
-### Pull Request Guidelines
-
-- **One skill per PR** for new skills. Cross-cutting changes (foundation, config) can be bundled.
-- **Include a test scenario** — describe a sample project or code snippet and what your skill should find/fix.
-- **Update all integration points** — README, config, install scripts, foundation, codex instructions. PRs that add a skill but skip wiring will be asked to complete it.
-- **Don't break existing skills** — if you're changing the foundation or config schema, verify that all 6 skills still work.
-
----
-
-## Credits
-
-The design principles behind 10x were heavily inspired by videos from [**@whosajid**](https://www.youtube.com/@whosajid) on YouTube. His breakdowns of spacing, depth, motion, and color in UI design formed the foundation for how these skills analyze and fix real code. Go watch his channel if you want to understand the "why" behind every rule 10x enforces.
-
----
+1. Add `skills/{name}/SKILL.md`.
+2. Add focused reference docs under `skills/{name}/reference/` when needed.
+3. Add `skills/{name}/agents/openai.yaml`.
+4. Add defaults to `10x.config.json` if the skill needs configuration.
+5. Update `.codex/instructions.md`, this README, and any shared foundation rules.
+6. Run `./scripts/install.sh --dry-run` and `./scripts/install.sh --verify`.
 
 ## License
 
