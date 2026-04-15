@@ -15,6 +15,27 @@ export const Route = createRootRoute({
         content:
           '10x is a dependency-free skill pack for Claude Code and Codex that improves typography, color, spacing, depth, motion, and responsive quality.',
       },
+      { property: 'og:type', content: 'website' },
+      { property: 'og:site_name', content: '10x' },
+      { property: 'og:url', content: 'https://10x.fariraimasocha.co.zw' },
+      { property: 'og:title', content: '10x — AI skills for systematic UI polish' },
+      {
+        property: 'og:description',
+        content:
+          '10x is a dependency-free skill pack for Claude Code and Codex that improves typography, color, spacing, depth, motion, and responsive quality.',
+      },
+      { property: 'og:image', content: 'https://10x.fariraimasocha.co.zw/10x/favicon-512x512.png' },
+      { property: 'og:image:width', content: '512' },
+      { property: 'og:image:height', content: '512' },
+      { property: 'og:image:alt', content: '10x logo' },
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:title', content: '10x — AI skills for systematic UI polish' },
+      {
+        name: 'twitter:description',
+        content:
+          '10x is a dependency-free skill pack for Claude Code and Codex that improves typography, color, spacing, depth, motion, and responsive quality.',
+      },
+      { name: 'twitter:image', content: 'https://10x.fariraimasocha.co.zw/10x/favicon-512x512.png' },
     ],
     links: [
       { rel: 'stylesheet', href: appCss },
