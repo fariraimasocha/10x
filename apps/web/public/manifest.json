@@ -1,0 +1,26 @@
+{
+  "short_name": "10x",
+  "name": "10x UI Skills",
+  "icons": [
+    {
+      "src": "/10x/favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/10x/favicon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/10x/favicon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#171914",
+  "background_color": "#f7f8f3"
+}
