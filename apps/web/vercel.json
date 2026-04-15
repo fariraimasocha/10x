@@ -1,0 +1,5 @@
+{
+  "framework": null,
+  "buildCommand": "pnpm build",
+  "installCommand": "pnpm install"
+}

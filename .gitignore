@@ -4,3 +4,4 @@ dist/
 tokens/
 .aidesigner/*
 !.aidesigner/.gitkeep
+.vercel
