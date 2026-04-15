@@ -4,7 +4,12 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 SOURCE_DIR="$REPO_DIR/skills"
-SKILL_NAMES=("spacing" "depth" "motion" "typography" "color" "responsive" "10x-foundation")
+
+SKILL_NAMES=()
+for skill_dir in "$SOURCE_DIR"/*/; do
+  [ -f "$skill_dir/SKILL.md" ] || continue
+  SKILL_NAMES+=("$(basename "$skill_dir")")
+done
 
 get_target_dirs() {
   local dirs=("$HOME/.claude/skills")
@@ -71,12 +76,18 @@ done
 
 echo ""
 echo "Done. Skills installed for Claude Code + Codex:"
-echo "  /spacing     — Fix spacing inconsistencies"
-echo "  /depth       — Add elevation and visual depth"
-echo "  /motion      — Add purposeful motion and transitions"
-echo "  /typography  — Fix type scale, hierarchy, and readability"
-echo "  /color       — Fix color system, palette, and contrast"
-echo "  /responsive  — Fix responsive design and adaptability"
+SLASH_LIST=""
+for skill_name in "${SKILL_NAMES[@]}"; do
+  if grep -q "^user-invokable: false" "$SOURCE_DIR/$skill_name/SKILL.md" 2>/dev/null; then
+    continue
+  fi
+  echo "  /$skill_name"
+  if [ -z "$SLASH_LIST" ]; then
+    SLASH_LIST="/$skill_name"
+  else
+    SLASH_LIST="$SLASH_LIST, /$skill_name"
+  fi
+done
 echo ""
-echo "Claude Code: run /spacing, /depth, /motion, /typography, /color, /responsive"
+echo "Claude Code: run $SLASH_LIST"
 echo "Codex: invoke skills by name in your prompt (see .codex/instructions.md)"

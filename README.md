@@ -87,6 +87,17 @@ The install script symlinks skills into:
 
 To remove: `./scripts/uninstall.sh`
 
+### Update
+
+To pull new skills as they're pushed:
+
+```bash
+cd path/to/10x
+./scripts/update.sh
+```
+
+This fetches the latest from `main` and refreshes symlinks. Re-run it any time new skills are released. The working tree must be clean and on `main`.
+
 ---
 
 ## Usage
