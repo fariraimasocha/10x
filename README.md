@@ -2,20 +2,36 @@
 
 # 10x
 
-**Ship polished UI, not pixel-guessing.**
+### Ship polished UI — stop pixel-guessing.
 
 [![Claude Code](https://img.shields.io/badge/Claude_Code-skill-7c3aed?style=flat-square)](https://docs.anthropic.com/en/docs/claude-code)
 [![Codex](https://img.shields.io/badge/OpenAI_Codex-compatible-10a37f?style=flat-square)](https://openai.com/codex)
 [![License: MIT](https://img.shields.io/badge/License-MIT-f59e0b?style=flat-square)](LICENSE)
 [![Skills](https://img.shields.io/badge/skills-6-3b82f6?style=flat-square)](#skills)
 
-Six AI-powered design skills that analyze spacing, depth, typography, motion, color, and responsive design in any web codebase — then propose (or apply) systematic improvements.
+Six AI design skills — **spacing, depth, typography, motion, color, responsive** — that analyze any web codebase and apply systematic fixes.
 
-**No runtime. No dependencies. Just design knowledge your AI agent can use.**
+No runtime. No dependencies. Just design knowledge your AI agent can use.
 
-[Install](#install) &#8226; [Usage](#usage) &#8226; [Skills](#skills) &#8226; [Configuration](#configuration) &#8226; [Contributing](#contributing)
+[**Install**](#install) · [**Usage**](#usage) · [**Skills**](#skills) · [**Configuration**](#configuration) · [**Contributing**](#contributing)
 
 </div>
+
+---
+
+## Quick start
+
+```bash
+git clone https://github.com/fariraimasocha/10x.git && cd 10x && ./scripts/install.sh
+```
+
+Then in any project:
+
+```bash
+/spacing                    # plan mode — report only
+/typography --mode apply    # apply fixes
+/polish                     # run all six skills end-to-end
+```
 
 ---
 
@@ -25,23 +41,18 @@ Most UI issues aren't bugs — they're inconsistencies. A `14px` that should be 
 
 10x gives your AI coding agent a structured design vocabulary. Instead of vague instructions like "make it look better", you run `/spacing` and get a concrete report: which values are off-scale, what to change, and why.
 
+**Example:** `/spacing --mode apply` on a component file:
+
+```diff
+- padding: 14px;     /* off-scale */
++ padding: 16px;     /* --10x-space-4 */
+- gap: 10px;
++ gap: 12px;         /* --10x-space-3 */
+- padding: 18px;
++ padding: 16px;     /* --10x-space-4 */
 ```
-You                          Your AI Agent                    Your Code
- │                                │                              │
- │  /spacing --mode apply         │                              │
- │ ─────────────────────────────> │                              │
- │                                │  scan for spacing properties │
- │                                │ ───────────────────────────> │
- │                                │                              │
- │                                │  14px → 16px (nearest 4pt)   │
- │                                │  gap: 10px → 12px            │
- │                                │  padding: 18px → 16px        │
- │                                │ <─────────────────────────── │
- │                                │                              │
- │  10x Spacing Report            │  apply edits                 │
- │  3 issues found, 3 fixed       │ ───────────────────────────> │
- │ <───────────────────────────── │                              │
-```
+
+> 3 issues found · 3 fixed · 0 deferred
 
 ---
 
@@ -412,5 +423,3 @@ The design principles behind 10x were heavily inspired by videos from [**@whosaj
 ## License
 
 MIT
-
-</div>
