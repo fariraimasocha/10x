@@ -64,6 +64,10 @@ export default function Footer() {
           >
             /typography
           </a>
+          <p>/color</p>
+          <p>/spacing</p>
+          <p>/depth</p>
+          <p>/motion</p>
           <p>/responsive</p>
           <p>/polish</p>
         </div>
