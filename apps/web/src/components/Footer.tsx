@@ -1,5 +1,25 @@
+import { Check, Copy } from "lucide-react"
+import { useState } from "react"
+import { toast } from "sonner"
+
+const INSTALL_COMMAND =
+  "git clone https://github.com/fariraimasocha/10x.git && cd 10x && ./scripts/install.sh"
+
 export default function Footer() {
   const year = new Date().getFullYear()
+  const [copied, setCopied] = useState(false)
+
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(INSTALL_COMMAND)
+      setCopied(true)
+      toast.success("Copied to clipboard")
+      setTimeout(() => setCopied(false), 1500)
+    } catch {
+      toast.error("Copy failed")
+    }
+  }
+
   return (
     <footer
       id="contact"
@@ -13,10 +33,18 @@ export default function Footer() {
           </h2>
         </div>
 
-        <div className="mb-16 overflow-x-auto rounded-[8px] border border-[rgba(247,248,243,0.16)] bg-[rgba(247,248,243,0.06)] p-5">
-          <code className="whitespace-nowrap font-mono text-sm text-[rgba(247,248,243,0.86)]">
-            git clone https://github.com/fariraimasocha/10x.git && cd 10x && ./scripts/install.sh
+        <div className="mb-16 flex items-center gap-4 rounded-[8px] border border-[rgba(247,248,243,0.16)] bg-[rgba(247,248,243,0.06)] p-5">
+          <code className="flex-1 overflow-x-auto whitespace-nowrap font-mono text-sm text-[rgba(247,248,243,0.86)]">
+            {INSTALL_COMMAND}
           </code>
+          <button
+            type="button"
+            onClick={handleCopy}
+            aria-label="Copy install command"
+            className="shrink-0 rounded-md p-2 text-[rgba(247,248,243,0.62)] transition-colors hover:bg-[rgba(247,248,243,0.08)] hover:text-[var(--color-paper)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(247,248,243,0.4)]"
+          >
+            {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+          </button>
         </div>
       </div>
 
