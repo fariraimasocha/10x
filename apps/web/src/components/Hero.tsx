@@ -21,8 +21,8 @@ export default function Hero() {
 
           <div className="mt-10 grid gap-6 md:mt-14 md:grid-cols-12 md:items-end">
             <p className="max-w-xl font-sans text-lg font-medium leading-relaxed text-[var(--color-muted)] md:col-span-6 md:text-xl">
-              Six focused UI quality skills plus one orchestrator for typography,
-              color, spacing, depth, motion, and responsive design.
+              Seven focused UI quality skills plus one orchestrator for hierarchy,
+              typography, color, spacing, depth, motion, and responsive design.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row md:col-span-6 md:justify-end">
               <a
@@ -51,6 +51,7 @@ export default function Hero() {
 
           <div className="space-y-3 font-mono text-sm leading-7 text-[rgba(247,248,243,0.78)]">
             <p><span className="text-[var(--color-green)]">$</span> /polish --scope src/components</p>
+            <p><span className="text-[var(--color-accent)]">hierarchy</span> - priority clarified</p>
             <p><span className="text-[var(--color-blue)]">typography</span> - hierarchy aligned</p>
             <p><span className="text-[var(--color-red)]">color</span> - contrast checked</p>
             <p><span className="text-[var(--color-green)]">responsive</span> - mobile-first fixes</p>

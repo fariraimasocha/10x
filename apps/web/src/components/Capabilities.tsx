@@ -17,7 +17,7 @@ const ROWS = [
   {
     n: '04',
     title: 'Orchestrate',
-    body: 'Run /polish for one merged pass that resolves conflicts across the six specialist skills before code changes.',
+    body: 'Run /polish for one merged pass that resolves conflicts across the six core implementation skills before code changes.',
   },
 ]
 

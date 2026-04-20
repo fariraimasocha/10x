@@ -19,7 +19,7 @@ export const Route = createRootRoute({
       {
         name: "description",
         content:
-          "10x is a dependency-free skill pack for Claude Code and Codex that improves typography, color, spacing, depth, motion, and responsive quality.",
+          "10x is a dependency-free skill pack for Claude Code and Codex that improves hierarchy, typography, color, spacing, depth, motion, and responsive quality.",
       },
       { name: "author", content: "Farirai Masocha" },
       { name: "robots", content: "index, follow" },
@@ -34,7 +34,7 @@ export const Route = createRootRoute({
       {
         property: "og:description",
         content:
-          "10x is a dependency-free skill pack for Claude Code and Codex that improves typography, color, spacing, depth, motion, and responsive quality.",
+          "10x is a dependency-free skill pack for Claude Code and Codex that improves hierarchy, typography, color, spacing, depth, motion, and responsive quality.",
       },
       {
         property: "og:image",
@@ -61,7 +61,7 @@ export const Route = createRootRoute({
       {
         name: "twitter:description",
         content:
-          "10x is a dependency-free skill pack for Claude Code and Codex that improves typography, color, spacing, depth, motion, and responsive quality.",
+          "10x is a dependency-free skill pack for Claude Code and Codex that improves hierarchy, typography, color, spacing, depth, motion, and responsive quality.",
       },
       {
         name: "twitter:image",

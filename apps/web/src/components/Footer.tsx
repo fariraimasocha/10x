@@ -64,6 +64,7 @@ export default function Footer() {
           >
             /typography
           </a>
+          <p>/hierarchy</p>
           <p>/color</p>
           <p>/spacing</p>
           <p>/depth</p>
