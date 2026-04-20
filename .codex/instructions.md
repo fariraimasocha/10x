@@ -1,6 +1,6 @@
 # 10x — Codex Instructions
 
-You have access to the **10x UI upgrade engine** — a set of design analysis skills that detect and fix spacing, depth, motion, typography, color, and responsive design issues in web codebases.
+You have access to the **10x UI upgrade engine** — a set of design analysis skills that detect and fix spacing, depth, motion, typography, hierarchy, color, and responsive design issues in web codebases.
 
 ## Available Skills
 
@@ -10,9 +10,10 @@ You have access to the **10x UI upgrade engine** — a set of design analysis sk
 | `depth` | Adds visual depth through multi-stop shadows, surface layering, and elevation tokens. Handles light/dark themes. |
 | `motion` | Adds purposeful transitions with tokenized durations. Flags dangerous animations. Always adds reduced-motion support. |
 | `typography` | Fixes type scale, hierarchy, line-height, letter-spacing, weight, font usage, and alignment. |
+| `hierarchy` | Fixes visual priority, scan path, CTA dominance, grouping, and competing focal points. |
 | `color` | Fixes color system, palette generation, contrast, and semantic color roles. |
 | `responsive` | Converts fixed layouts to fluid systems. Enforces mobile-first breakpoints, responsive spacing, and typography scaling. |
-| `polish` | Runs all six UI quality skills against one shared scope and produces one merged report. |
+| `polish` | Runs the six core implementation skills against one shared scope and produces one merged report. |
 
 ## How to Use
 
@@ -29,6 +30,7 @@ Use only `analyse`, `plan`, and `apply` as mode values. If the user says "analyz
 Use $spacing in apply mode for src/components.
 Use $depth with shadow-style soft-ui.
 Use $typography with scale-ratio major-third.
+Use $hierarchy in plan mode for the dashboard page.
 Use $motion in plan mode.
 Use $color to analyse the palette.
 Use $responsive to check layout adaptability.
@@ -47,8 +49,9 @@ The project uses `10x.config.json` at the root for customizing behavior. Read it
 
 1. **Spacing comes first** — fix spacing before depth, typography, or motion
 2. **Typography reinforces spacing** — consistent type scale creates natural rhythm
-3. **Depth reinforces grouping** — elevated surfaces need appropriate spacing
-4. **Motion reinforces depth** — elevation changes should include transitions
-5. **Color reinforces hierarchy** — saturated color for CTAs, neutrals for everything else
-6. **Responsive ties everything together** — all properties must scale with screen size
-7. **Be conservative** — report rather than fix when confidence is below 80%
+3. **Hierarchy clarifies priority** — one primary path should lead each view
+4. **Depth reinforces grouping** — elevated surfaces need appropriate spacing
+5. **Motion reinforces depth** — elevation changes should include transitions
+6. **Color reinforces hierarchy** — saturated color for CTAs, neutrals for everything else
+7. **Responsive ties everything together** — all properties must scale with screen size
+8. **Be conservative** — report rather than fix when confidence is below 80%

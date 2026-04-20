@@ -1,0 +1,5 @@
+interface:
+  display_name: "10x Hierarchy"
+  short_description: "Find and fix unclear visual priority."
+  brand_color: "#3B82F6"
+  default_prompt: "Use $hierarchy in plan mode to analyse visual priority in the current UI scope."

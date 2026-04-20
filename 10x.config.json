@@ -22,6 +22,12 @@
     "maxFontFamilies": 2,
     "normaliseToTokens": true
   },
+  "hierarchy": {
+    "maxPrimaryActionsPerView": 1,
+    "maxCompetingFocalPoints": 2,
+    "preferSingleReadingPath": true,
+    "ctaPriority": "one-primary"
+  },
   "color": {
     "baseHue": "auto",
     "neutralTint": true,

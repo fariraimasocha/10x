@@ -7,9 +7,9 @@
 [![Claude Code](https://img.shields.io/badge/Claude_Code-skill-7c3aed?style=flat-square)](https://docs.anthropic.com/en/docs/claude-code)
 [![Codex](https://img.shields.io/badge/OpenAI_Codex-compatible-10a37f?style=flat-square)](https://openai.com/codex)
 [![License: MIT](https://img.shields.io/badge/License-MIT-f59e0b?style=flat-square)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-7-3b82f6?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-8-3b82f6?style=flat-square)](#skills)
 
-Six focused UI quality skills plus one orchestrator: **typography, color, spacing, depth, motion, responsive**, and **polish**.
+Seven focused UI quality skills plus one orchestrator: **typography, hierarchy, color, spacing, depth, motion, responsive**, and **polish**.
 
 [Install](#install) · [Usage](#usage) · [Skills](#skills) · [Configuration](#configuration) · [Contributing](#contributing)
 
@@ -67,6 +67,7 @@ Run skills as slash commands from the target project:
 ```bash
 /spacing
 /typography --mode apply --scope src/components
+/hierarchy --mode plan --scope src/routes
 /color --mode analyse
 /responsive --focus layout
 /polish
@@ -79,6 +80,7 @@ Reference skills by name in your prompt:
 ```text
 Use $spacing in plan mode for src/components.
 Use $typography in apply mode for the dashboard components.
+Use $hierarchy in plan mode for the app shell.
 Use $color to analyse the palette and contrast.
 Use $polish in plan mode across the app shell.
 ```
@@ -89,15 +91,16 @@ Use $polish in plan mode across the app shell.
 | --- | --- | --- |
 | `spacing` | Off-scale padding, margin, gaps, grouping rhythm, token opportunities. | Old spacing value -> nearest scale value, risk-rated by layout impact. |
 | `typography` | Type scale, hierarchy, line-height, tracking, weight, font proliferation. | Type token proposal and concrete class/CSS replacements. |
+| `hierarchy` | Screen priority, scan path, CTA dominance, grouping, affordance clarity, competing focal points. | Priority stack, composition fixes, and risk-rated class or structure changes. |
 | `color` | Palette fragmentation, contrast, semantic roles, hardcoded colors. | Brand/neutral/semantic scale proposal and token mappings. |
 | `depth` | Surface layers, shadows, elevation roles, z-index consistency. | Elevation token proposal and shadow/surface normalization. |
 | `motion` | Transition safety, duration/easing drift, reduced-motion support. | Motion token proposal and safe transform/opacity changes. |
 | `responsive` | Rigid widths, stacking, breakpoints, mobile-first spacing/type. | Mobile-first layout transformations with risk ratings. |
-| `polish` | Runs the six quality skills against one shared scope. | One merged report with conflicts resolved before edits. |
+| `polish` | Runs the six core implementation skills against one shared scope. | One merged report with conflicts resolved before edits. |
 
 ## Polish Orchestrator
 
-`/polish` is the coordinated pass for improving a UI across multiple quality dimensions without getting six separate reports. It loads config and resolves scope once, runs the individual skills in a fixed order, then merges findings, proposed edits, and generated tokens into one report.
+`/polish` is the coordinated pass for improving a UI across multiple quality dimensions without getting six separate reports. It loads config and resolves scope once, runs the six core implementation skills in a fixed order, then merges findings, proposed edits, and generated tokens into one report. `/hierarchy` is standalone so product-level priority decisions stay explicit.
 
 Execution order:
 
@@ -154,6 +157,7 @@ Put `10x.config.json` in the target project root to customize behavior:
   "spacing": { "baseUnit": "rem", "gridStep": 4, "groupStepRem": 1.0 },
   "depth": { "shadowStyle": "material-like", "elevationLevels": 5, "themeModes": ["light", "dark"] },
   "typography": { "baseSizePx": 16, "scaleRatio": "minor-third", "maxFontFamilies": 2 },
+  "hierarchy": { "maxPrimaryActionsPerView": 1, "maxCompetingFocalPoints": 2, "preferSingleReadingPath": true, "ctaPriority": "one-primary" },
   "motion": { "style": "standard", "respectReducedMotion": true, "preferTransforms": true },
   "color": { "baseHue": "auto", "neutralTint": true, "contrastMinimum": "AA" },
   "responsive": {
@@ -175,6 +179,7 @@ If no config exists, the foundation skill uses the defaults bundled in this repo
 |   |-- 10x-foundation/
 |   |-- spacing/
 |   |-- typography/
+|   |-- hierarchy/
 |   |-- color/
 |   |-- depth/
 |   |-- motion/
