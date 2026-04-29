@@ -6,8 +6,7 @@ export default function Hero() {
     >
       <div className="mx-auto grid min-h-[76vh] w-full max-w-[118rem] items-end gap-12 lg:grid-cols-[minmax(0,1.12fr)_minmax(340px,0.58fr)]">
         <div>
-          <div className="mb-8 flex w-fit items-center gap-3 rounded-[8px] border border-[var(--color-line)] bg-[var(--color-surface)] px-3 py-2 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-[var(--color-muted)]">
-            <img src="/10x/favicon.svg" alt="" className="h-6 w-6 rounded-[6px]" />
+          <div className="mb-8 flex w-fit items-center rounded-[8px] border border-[var(--color-line)] bg-[var(--color-surface)] px-3 py-2 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-[var(--color-muted)]">
             Claude Code + Codex
           </div>
 
@@ -42,8 +41,7 @@ export default function Hero() {
         </div>
 
         <aside className="hero-panel relative overflow-hidden rounded-[8px] border border-[var(--color-line-strong)] bg-[var(--color-ink)] p-5 text-[var(--color-paper)] shadow-[var(--shadow-lift)]">
-          <div className="mb-16 flex items-center justify-between">
-            <img src="/10x/favicon.svg" alt="10x logo" className="h-14 w-14 rounded-[8px] ring-1 ring-[rgba(247,248,243,0.2)]" />
+          <div className="mb-16 flex items-center justify-end">
             <span className="font-mono text-[0.65rem] uppercase tracking-[0.16em] text-[rgba(247,248,243,0.58)]">
               apply mode
             </span>

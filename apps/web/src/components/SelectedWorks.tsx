@@ -117,28 +117,17 @@ export default function SelectedWorks() {
               <div className="skill-grid h-full w-full" />
             </div>
 
-            <div className="relative flex items-start justify-between gap-6">
-              <div>
-                <p
-                  className={`font-mono text-xs uppercase tracking-[0.16em] ${
-                    skill.featured ? 'text-[rgba(247,248,243,0.58)]' : 'text-[var(--color-muted)]'
-                  }`}
-                >
-                  skill {skill.n}
-                </p>
-                <h3 className="mt-5 font-serif text-4xl font-light leading-none tracking-tight md:text-5xl">
-                  {skill.title}
-                </h3>
-              </div>
-
-              <img
-                src="/10x/favicon.svg"
-                alt=""
-                loading="lazy"
-                className={`h-10 w-10 shrink-0 rounded-[8px] ${
-                  skill.featured ? 'ring-1 ring-[rgba(247,248,243,0.22)]' : ''
+            <div className="relative">
+              <p
+                className={`font-mono text-xs uppercase tracking-[0.16em] ${
+                  skill.featured ? 'text-[rgba(247,248,243,0.58)]' : 'text-[var(--color-muted)]'
                 }`}
-              />
+              >
+                skill {skill.n}
+              </p>
+              <h3 className="mt-5 font-serif text-4xl font-light leading-none tracking-tight md:text-5xl">
+                {skill.title}
+              </h3>
             </div>
 
             <p

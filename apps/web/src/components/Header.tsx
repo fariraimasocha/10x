@@ -1,4 +1,30 @@
+import { useEffect, useState } from "react"
+
+async function getGitHubStars(): Promise<number | null> {
+  try {
+    const res = await fetch("https://api.github.com/repos/fariraimasocha/10x", {
+      headers: { Accept: "application/vnd.github+json" },
+    })
+    if (!res.ok) return null
+    const data = await res.json()
+    return data.stargazers_count ?? null
+  } catch {
+    return null
+  }
+}
+
+function formatStars(n: number): string {
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}k`
+  return String(n)
+}
+
 export default function Header() {
+  const [stars, setStars] = useState<number | null>(null)
+
+  useEffect(() => {
+    getGitHubStars().then(setStars)
+  }, [])
+
   return (
     <nav className="nav-glass hairline-b fixed top-0 z-50 w-full">
       <div className="mx-auto flex max-w-[118rem] items-center justify-between px-5 py-4 lg:px-10">
@@ -38,11 +64,16 @@ export default function Header() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="10x on GitHub"
-            className="hidden h-9 w-9 items-center justify-center rounded-[8px] border border-[var(--color-line-strong)] bg-[var(--color-surface)] transition-colors hover:border-[var(--color-ink)] sm:flex"
+            className="hidden items-center gap-2 rounded-[8px] border border-[var(--color-line-strong)] bg-[var(--color-surface)] px-3 py-2 transition-colors hover:border-[var(--color-ink)] sm:flex"
           >
-            <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current">
+            <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 shrink-0 fill-current">
               <path d="M12 .5C5.73.5.75 5.48.75 11.75c0 4.97 3.22 9.18 7.69 10.67.56.1.77-.24.77-.54 0-.27-.01-1.16-.02-2.1-3.13.68-3.79-1.34-3.79-1.34-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.93.1-.73.39-1.22.71-1.5-2.5-.28-5.13-1.25-5.13-5.57 0-1.23.44-2.24 1.16-3.03-.12-.28-.5-1.43.11-2.98 0 0 .94-.3 3.09 1.16.9-.25 1.86-.37 2.82-.37.96 0 1.92.12 2.82.37 2.15-1.46 3.09-1.16 3.09-1.16.61 1.55.23 2.7.11 2.98.72.79 1.16 1.8 1.16 3.03 0 4.33-2.64 5.29-5.15 5.56.4.35.76 1.04.76 2.1 0 1.52-.01 2.74-.01 3.11 0 .3.2.65.78.54 4.46-1.49 7.68-5.7 7.68-10.67C23.25 5.48 18.27.5 12 .5z" />
             </svg>
+            {stars !== null && (
+              <span className="pt-0.5 font-mono text-[0.62rem] uppercase tracking-[0.14em] md:text-[0.68rem]">
+                {formatStars(stars)}
+              </span>
+            )}
           </a>
           <a
             href="#contact"
